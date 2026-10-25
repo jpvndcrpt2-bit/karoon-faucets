@@ -54,13 +54,12 @@ section{padding-block:72px 0}
 .btn{display:inline-block;background:var(--red);color:var(--red-ink);text-decoration:none;font-weight:600;padding:11px 28px;border-radius:6px;border:0;font-family:inherit;font-size:15px;cursor:pointer;margin-top:12px}
 .btn:hover{filter:brightness(1.1)}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.tile{border-radius:12px;background:var(--dark);display:grid;place-items:center;aspect-ratio:3/4;overflow:hidden}
+.tile{border-radius:12px;background:var(--dark);aspect-ratio:3/4;overflow:hidden}
 .tile.rd{background:var(--red);transform:translateY(32px)}
-.tile svg{width:70%;height:auto}
 .cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px}
 .cat .im{background:var(--dark);border-radius:14px;aspect-ratio:1/1.05;display:grid;place-items:center;overflow:hidden;margin-bottom:14px}
-.cat .im svg{width:62%;height:auto;transition:transform .35s}
-.cat:hover .im svg{transform:scale(1.07)}
+.cat .im img{transition:transform .35s}
+.cat:hover .im img{transform:scale(1.07)}
 .cat h3{color:var(--red);font-size:18px}
 .cat p{color:var(--muted);font-size:14.5px;margin:4px 0 6px}
 .cat a{color:var(--red);text-decoration:none;font-weight:600;font-size:14px}
@@ -80,8 +79,8 @@ section{padding-block:72px 0}
 .chips button[aria-pressed="true"]{background:var(--red);color:#fff;border-color:var(--red)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
-.card .img{background:var(--dark);aspect-ratio:1/0.85;display:grid;place-items:center}
-.card .img svg{width:60%;height:auto}
+.card .img{background:var(--dark);aspect-ratio:1/1;overflow:hidden}
+.card .img img,.tile img,.cat .im img,.menu .art img{width:100%;height:100%;object-fit:cover;display:block}
 .card .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
 .card h3{font-size:16.5px}
 .card .meta{color:var(--muted);font-size:13.5px;line-height:1.6}
@@ -108,7 +107,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .menu.open{display:flex}
 .menu .pn{width:min(440px,100%);background:#fafafa;color:#18181b;margin-inline-start:0;padding:calc(24px + env(safe-area-inset-top,0px)) 32px 24px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
 .menu .art{flex:1;background:var(--dark);display:grid;place-items:center}
-.menu .art svg{width:60%;height:auto}
 .menu .pn a{font-size:22px;font-weight:600;text-decoration:none;padding:6px 0;color:#18181b}
 .menu .pn a:hover{color:var(--red)}
 .menu .pn a.sub{font-size:17px;font-weight:400;padding-inline-start:16px;color:#55555b}
@@ -320,12 +318,12 @@ function render(){
   $('#langBtn').textContent=t.lb;
   $('#heroSvg').innerHTML=scene(heroFin);
   sw($('#heroSw'),heroFin,k=>{heroFin=k;render()});
-  $('#t1').innerHTML=faucet('kitchen','black',false);$('#t2').innerHTML=faucet('rain','chrome',false);
-  $('#menuArt').innerHTML=faucet('wall','gold',false);
+  $('#t1').innerHTML='<img src="img/p4.jpg" alt="">';$('#t2').innerHTML='<img src="img/p6.jpg" alt="">';
+  $('#menuArt').innerHTML='<img src="img/p2.jpg" alt="">';
   const cg=$('#catGrid');cg.innerHTML='';
-  [['basin','basin','chrome'],['kitchen','kitchen','black'],['wall','bath','nickel'],['rain','shower','gold']].forEach((c,i)=>{
+  [['basin','basin','chrome',1],['kitchen','kitchen','black',3],['wall','bath','nickel',7],['rain','shower','gold',5]].forEach((c,i)=>{
     const d=document.createElement('div');d.className='cat';
-    d.innerHTML=`<div class="im">${faucet(c[0],c[2],false)}</div><h3>${t['c'+(i+1)]}</h3><p>${t['c'+(i+1)+'p']}</p><a href="#catalog" data-go="${c[1]}">${t.cta1} ←</a>`;
+    d.innerHTML=`<div class="im"><img src="img/p${c[3]}.jpg" alt="" loading="lazy"></div><h3>${t['c'+(i+1)]}</h3><p>${t['c'+(i+1)+'p']}</p><a href="#catalog" data-go="${c[1]}">${t.cta1} ←</a>`;
     d.querySelector('a').onclick=()=>{cat=c[1];render()};cg.appendChild(d)});
   $('#cut').innerHTML=cutaway()+
    `<div class="cl" style="top:20%;inset-inline-start:6%"><em>${t.l3}</em></div>
@@ -338,7 +336,7 @@ function render(){
   const g=$('#grid');g.innerHTML='';
   P.filter(p=>cat==='all'||p.cat===cat).forEach(p=>{
     const f=pf[p.id]||p.f;const el=document.createElement('article');el.className='card';
-    el.innerHTML=`<div class="img">${faucet(p.t,f,false)}</div><div class="body"><h3>${p[lang]}</h3><div class="meta">${p['m'+lang]}</div><div class="mini"></div><div class="row"><span class="price">${fmt(p.price)} <small>${t.unit}</small></span><a class="order" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent(t.wa+p[lang]+' ('+FIN[f].n[lang]+')')}">${t.order}</a></div></div>`;
+    el.innerHTML=`<div class="img"><img src="img/p${p.id}.jpg" alt="${p[lang]}" loading="lazy"></div><div class="body"><h3>${p[lang]}</h3><div class="meta">${p['m'+lang]}</div><div class="mini"></div><div class="row"><span class="price">${fmt(p.price)} <small>${t.unit}</small></span><a class="order" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent(t.wa+p[lang]+' ('+FIN[f].n[lang]+')')}">${t.order}</a></div></div>`;
     const m=el.querySelector('.mini');FK.forEach(k=>{const b=document.createElement('button');const F=FIN[k];b.style.background=`linear-gradient(135deg,${F.a},${F.b} 55%,${F.c})`;b.setAttribute('aria-pressed',k===f);b.setAttribute('aria-label',F.n[lang]);b.title=F.n[lang];b.onclick=()=>{pf[p.id]=k;render()};m.appendChild(b)});
     g.appendChild(el)});
   $('#waMain').href='https://wa.me/'+WA+'?text='+encodeURIComponent(t.waG);
