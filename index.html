@@ -67,11 +67,11 @@ section{padding-block:72px 0}
 /* cutaway */
 .cut{background:#fff;border-radius:16px;position:relative;aspect-ratio:16/9;max-height:560px;width:100%}
 :root:not([data-theme="light"]) .cutbg{}
-.cut{background:#000;border:1px solid var(--line);overflow:hidden}
+.cut{direction:rtl;background:#000;border:1px solid var(--line);overflow:hidden}
 .ci{position:absolute;inset:0;margin:auto;height:100%;width:auto;max-width:100%;object-fit:contain}
 .cl em{background:#fff;color:#18181b;border-color:#fff}.cl::before{background:#ffffffaa}
 .cl{position:absolute;display:flex;align-items:center;gap:8px;font-size:13px;white-space:nowrap}
-.cl em{font-style:normal;background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:3px 14px}
+.cl{direction:rtl}.cl em{direction:var(--txt,rtl);unicode-bidi:isolate;font-style:normal;background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:3px 14px}
 .cl em{order:0}.cl::before{content:"";order:1;height:1px;width:clamp(30px,9vw,130px);background:var(--muted)}.cl::after{content:"";order:2;width:14px;height:14px;border-radius:50%;background:var(--red);box-shadow:0 0 0 5px #c4122f33}
 .cl.r{flex-direction:row-reverse}
 /* catalog */
@@ -136,7 +136,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       </div>
       <div class="fx"><div id="heroSvg"></div><div class="pill" id="heroSw" role="group"></div></div>
     </div>
-    <a class="go" href="#catalog"><i>←</i><span data-t="cta1"></span></a>
+    <a class="go" href="#catalog"><i id="goA">←</i><span data-t="cta1"></span></a>
   </div>
 </div>
 
@@ -200,10 +200,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 <script>
 const FIN={
-  chrome:{n:{fa:'کروم',ar:'كروم'},a:'#f4f8fa',b:'#aebcc3',c:'#5d6e76'},
-  black:{n:{fa:'مشکی مات',ar:'أسود مطفي'},a:'#8a9196',b:'#454b4f',c:'#1c1f21'},
-  gold:{n:{fa:'طلایی',ar:'ذهبي'},a:'#ffe9a8',b:'#d9a93e',c:'#8a6217'},
-  nickel:{n:{fa:'نیکل ساتن',ar:'نيكل ساتان'},a:'#e3ddd1',b:'#a89f8e',c:'#625b4c'}
+  chrome:{n:{fa:'کروم',ar:'كروم',en:'Chrome'},a:'#f4f8fa',b:'#aebcc3',c:'#5d6e76'},
+  black:{n:{fa:'مشکی مات',ar:'أسود مطفي',en:'Matte black'},a:'#8a9196',b:'#454b4f',c:'#1c1f21'},
+  gold:{n:{fa:'طلایی',ar:'ذهبي',en:'Gold'},a:'#ffe9a8',b:'#d9a93e',c:'#8a6217'},
+  nickel:{n:{fa:'نیکل ساتن',ar:'نيكل ساتان',en:'Satin nickel'},a:'#e3ddd1',b:'#a89f8e',c:'#625b4c'}
 };
 const FK=Object.keys(FIN);
 let uid=0;
@@ -293,38 +293,40 @@ const T={
   s1a:'گارانتی ۵ ساله',s1b:'روی نشتی و کارتریج',s2a:'۴ رنگ',s2b:'کروم، مشکی مات، طلایی، نیکل ساتن',s3a:'ارسال به سراسر ایران',s3b:'مستقیم از کارخانه شهرک صنعتی شنزار',s4a:'کارتریج یدکی',s4b:'همیشه در انبار کارخانه موجود است',
   ctaH:'مدل مناسب را پیدا نکردید؟',ctaP:'عکس یا ابعاد سینک و روشویی را بفرستید. مدل مناسب را همان روز پیشنهاد می‌دهیم.',addr:'آدرس کارخانه: تهران، شریف‌آباد، شهرک صنعتی شنزار',ctaB:'پیام در واتساب',
   foot1:'شیرآلات کارون · تهران، شریف‌آباد، شهرک صنعتی شنزار',foot2:'نمونه آزمایشی. قیمت‌ها نمایشی است.',
-  wa:'سلام، می‌خواهم این مدل را سفارش بدهم: ',waG:'سلام، درباره شیرآلات سؤال دارم.',lb:'AR',addr:''},
- ar:{brand:'حنفيات كارون',tag:'التفاصيل تحفظ الماء',
-  h1:'حنفيات تبقى محكمة الإغلاق لسنوات',sub:'خلاطات مغاسل ومجالي ودشات وحمامات بجسم نحاسي وخرطوشة سيراميك. اختر اللون واطلب مباشرة عبر الواتساب.',
-  cta1:'شوف المنتجات',m0:'الرئيسية',m1:'المنتجات',m2:'التقنية',m3:'خدمة ما بعد البيع',m4:'اطلب وتواصل',
-  k1:'عن حنفيات كارون',aH:'من صب النحاس إلى حنفية تمسكها بيدك',aP:'نبيع حنفيات البناء بجسم نحاسي مصبوب وخرطوشة سيراميك. كل موديل متوفر بأربعة ألوان، والتركيب بكربلاء والنجف.',aB:'التركيب الداخلي للحنفية',
-  k2:'الأقسام',cH:'حنفية لكل مكان',
-  c1:'خلاطات المغاسل',c1p:'ذراع واحد، طويلة وقصيرة للمغسلة الوعائية والمدفونة.',c2:'خلاطات المجلى',c2p:'عنق الإوزة بدوران ٣٦٠ درجة ورشاش.',c3:'خلاطات الحمام',c3p:'جدارية بمقبضين وطقم دش كامل.',c4:'الدشات',c4p:'دش مطري علوي ودش يدوي.',
-  k3:'التقنية',tH:'داخل حنفية حنفيات كارون',
-  l1:'خرطوشة سيراميك ٣٥ ملم',l2:'جسم نحاسي مصبوب',l3:'مهوّي لتقليل الاستهلاك',l4:'طلاء PVD مقاوم للخدش',l5:'تركيب سريع وسهل',
-  k4:'الكتالوج',catH:'المنتجات',all:'الكل',basin:'مغاسل',kitchen:'مجالي',shower:'دش',bath:'حمام',unit:'دينار',order:'اطلب',
-  k5:'الخدمة',sH:'نبقى معك بعد الشراء',
-  s1a:'ضمان ٥ سنوات',s1b:'على التسرب والخرطوشة',s2a:'٤ ألوان',s2b:'كروم، أسود مطفي، ذهبي، نيكل ساتان',s3a:'تركيب بنفس الأسبوع',s3b:'بكربلاء والنجف',s4a:'خرطوشة بديلة',s4b:'متوفرة دائماً بالمخزن',
-  ctaH:'ما لقيت الموديل المناسب؟',ctaP:'ارسل صورة أو قياسات المجلى والمغسلة. نقترح لك الموديل المناسب بنفس اليوم.',ctaB:'رسالة واتساب',
-  foot1:'حنفيات كارون · بيع حنفيات البناء',foot2:'نموذج تجريبي. الأسعار للعرض فقط.',
-  wa:'مرحبا، أريد أطلب هذا الموديل: ',waG:'مرحبا، عندي استفسار عن الحنفيات.',lb:'FA',addr:''}
+  wa:'سلام، می‌خواهم این مدل را سفارش بدهم: ',waG:'سلام، درباره شیرآلات سؤال دارم.',lb:'EN',arrow:'←'},
+ en:{brand:'Karoon Faucets',tag:'Details keep the water in',
+  h1:'Faucets that stay watertight for years',sub:'Basin, kitchen, shower and bath fittings with a brass body and ceramic cartridge. Pick your finish and order straight on WhatsApp.',
+  cta1:'View products',m0:'Home',m1:'Products',m2:'Technology',m3:'After-sales service',m4:'Order & contact',
+  k1:'About Karoon',aH:'From cast brass to a faucet you can feel in your hand',aP:'We make building faucets with a cast brass body and ceramic cartridge. Every model comes in four finishes and ships straight from our Tehran factory across Iran.',aB:'Inside a faucet',
+  k2:'Categories',cH:'A faucet for every space',
+  c1:'Basin faucets',c1p:'Single-lever, tall and short, for vessel and built-in basins.',c2:'Kitchen faucets',c2p:'Gooseneck with 360° swivel and pull-down spray.',c3:'Bath faucets',c3p:'Wall-mounted with two controls and full shower sets.',c4:'Showers',c4p:'Rain showers and handheld showers.',
+  k3:'Technology',tH:'Inside a Karoon faucet',
+  l1:'35 mm ceramic cartridge',l2:'Cast brass body',l3:'Water-saving aerator',l4:'Scratch-resistant PVD finish',l5:'Quick, easy installation',
+  k4:'Catalog',catH:'Products',all:'All',basin:'Basin',kitchen:'Kitchen',shower:'Shower',bath:'Bath',unit:'Toman',order:'Order',
+  k5:'Service',sH:'We stay with you after the purchase',
+  s1a:'5-year warranty',s1b:'On leaks and cartridge',s2a:'4 finishes',s2b:'Chrome, matte black, gold, satin nickel',s3a:'Shipping across Iran',s3b:'Direct from our Shenzar industrial town factory',s4a:'Spare cartridges',s4b:'Always in stock at the factory',
+  ctaH:"Can't find the right model?",ctaP:'Send a photo or the dimensions of your sink or basin. We will suggest a model the same day.',ctaB:'Message on WhatsApp',addr:'Factory: Shenzar Industrial Town, Sharif Abad, Tehran',
+  foot1:'Karoon Faucets · Shenzar Industrial Town, Sharif Abad, Tehran',foot2:'Demo site. Prices are for display only.',
+  wa:'Hello, I would like to order this model: ',waG:'Hello, I have a question about your faucets.',lb:'FA',arrow:'→'}
 };
+const EN_P={1:['Vida single-lever basin faucet','Brass body · 35 mm ceramic cartridge'],2:['Aram tall basin faucet','24 cm tall, for vessel basins'],3:['Sima gooseneck kitchen faucet','360° swivel · pull-down spray'],4:['Caspian gold kitchen faucet','Scratch-resistant PVD finish'],5:['Baran rain shower','30 cm head · wall arm'],6:['Nora black rain shower set','25 cm head · limescale-resistant'],7:['Roodab wall-mounted bath mixer','Two controls · 15 cm centres'],8:['Safir handheld shower with hose','1.5 m anti-twist hose · three spray modes']};
+P.forEach(p=>{p.en=EN_P[p.id][0];p.men=EN_P[p.id][1]});
 const WA='989128703744';
 let lang='fa',cat='all',heroFin='chrome';const pf={};
 const $=s=>document.querySelector(s);
-const fmt=n=>n.toLocaleString('fa-IR');
+const fmt=n=>n.toLocaleString(lang==='fa'?'fa-IR':'en-US');
 function sw(box,cur,on){box.innerHTML='';FK.forEach(k=>{const b=document.createElement('button');const F=FIN[k];b.style.background=`linear-gradient(135deg,${F.a},${F.b} 55%,${F.c})`;b.setAttribute('aria-pressed',k===cur);b.setAttribute('aria-label',F.n[lang]);b.title=F.n[lang];b.onclick=()=>on(k);box.appendChild(b)})}
 function render(){
-  const t=T[lang];document.documentElement.lang=lang;document.documentElement.dir='rtl';
+  const t=T[lang];document.documentElement.lang=lang;const dir=lang==='fa'?'rtl':'ltr';document.documentElement.dir=dir;document.documentElement.style.setProperty('--txt',dir);
   document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t[e.dataset.t]);
-  $('#langBtn').textContent=t.lb;
+  $('#langBtn').textContent=t.lb;$('#goA').textContent=t.arrow;
   $('#heroSvg').innerHTML='<img class="hi" src="img/hero.jpg" alt="">';
   $('#t1').innerHTML='<img src="img/p4.jpg" alt="">';$('#t2').innerHTML='<img src="img/p6.jpg" alt="">';
   $('#menuArt').innerHTML='<img src="img/p2.jpg" alt="">';
   const cg=$('#catGrid');cg.innerHTML='';
   [['basin','basin','chrome',1],['kitchen','kitchen','black',3],['wall','bath','nickel',7],['rain','shower','gold',5]].forEach((c,i)=>{
     const d=document.createElement('div');d.className='cat';
-    d.innerHTML=`<div class="im"><img src="img/p${c[3]}.jpg" alt="" loading="lazy"></div><h3>${t['c'+(i+1)]}</h3><p>${t['c'+(i+1)+'p']}</p><a href="#catalog" data-go="${c[1]}">${t.cta1} ←</a>`;
+    d.innerHTML=`<div class="im"><img src="img/p${c[3]}.jpg" alt="" loading="lazy"></div><h3>${t['c'+(i+1)]}</h3><p>${t['c'+(i+1)+'p']}</p><a href="#catalog" data-go="${c[1]}">${t.cta1} ${t.arrow}</a>`;
     d.querySelector('a').onclick=()=>{cat=c[1];render()};cg.appendChild(d)});
   $('#cut').innerHTML='<img class="ci" src="img/cut.jpg" alt="">'+
    `<div class="cl r" style="top:52%;inset-inline-end:4%"><em>${t.l3}</em></div>
@@ -348,7 +350,6 @@ $('#menuBtn').onclick=()=>openM(true);$('#menuX').onclick=()=>openM(false);
 menu.addEventListener('click',e=>{if(e.target===menu)openM(false)});
 menu.querySelectorAll('[data-m]').forEach(a=>a.addEventListener('click',()=>{if(a.dataset.f){cat=a.dataset.f;render()}openM(false)}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')openM(false)});
-$('#langBtn').onclick=()=>{lang=lang==='fa'?'ar':'fa';render()};
-$('#langBtn').hidden=true;
+$('#langBtn').onclick=()=>{lang=lang==='fa'?'en':'fa';render()};
 render();
 </script>
